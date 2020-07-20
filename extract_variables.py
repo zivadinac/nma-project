@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 20 17:29:12 2020
 
-@author: User
+@author: Neuroducks
 """
 
 #%% LOAD VARIABLES
