@@ -36,17 +36,21 @@ print(dat.keys())
 
 
 from sklearn import linear_model
-
-#try different alphas for more or less regularization
+# setup for a linear model 
+# try different alphas for more or less regularization
 reg = linear_model.Lasso(alpha=0.1)#10)
+# use a bias term (intercept)
 X = np.ones(dat['sresp'].shape+np.array([1,0]))
-X[1::,:]=dat['sresp']
+X[1::,:] = dat['sresp']
+# fit neural data to movement speed
 reg.fit(X.T,dat['run'])
-
-
-plt.plot(reg.coef_.flatten())
+# plot coefficients on neurons
+plt.plot(reg.coef_[1::].flatten())
+# get number of nonzero coefficients
 np.sum(reg.coef_.flatten()!=0)
 plt.show()
+# predict the movement speed by neural data 
+# (beware no differentiation between training and testset)
 pred = np.zeros(7018)
 for i in range(7018):
     pred[i] = reg.predict([X[:,i]])
@@ -54,13 +58,12 @@ for i in range(7018):
 plt.plot(pred,dat['run'],'*')
 
 
-
+### testing/exploring
 # plt.plot(np.arange(7018),np.mean(dat['sresp'],axis=0))
 # plt.show()
 
 # print(dat['pupilCOM'].shape)
 # #plt.plot(dat['pupilCOM'][:,0],dat['pupilCOM'][:,1],'.')
-
 
 # grad = np.diff(dat['pupilCOM'],axis=0)
 
@@ -68,20 +71,17 @@ plt.plot(pred,dat['run'],'*')
 # plt.plot(np.mean(dat['sresp'],axis=0)[1::],np.abs(grad[:,0])+np.abs(grad[:,1]),'.')
 # plt.show()
 
-
 #plt.plot(np.mean(dat['sresp'],axis=1),x)
 # for i in range(7018):
 #     plt.plot(dat['pupilCOM'][i,0],dat['pupilCOM'][i,1],'b*')
 #     plt.draw()
 #     plt.pause(0.1)
 
-
 # print(dat['sresp'].shape)
 # print(dat['pupilArea'].shape)
 # dat['pupilArea']
 
 # predict pupil area by neuronal response 
-
 
 #plt.hist(dat['pupilArea'].flatten(),bins=150)
 
