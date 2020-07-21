@@ -2,9 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter
 
-dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
-
-filtered_run = gaussian_filter(dat["run"], 5)
 
 def detect_movement_onset(run_speed, stop_len=5, run_len=5, filter_sigma=5, speed_thr=2):
     speed = gaussian_filter(run_speed, filter_sigma) if filter_sigma > 0 else run_speed
@@ -20,6 +17,7 @@ def detect_movement_onset(run_speed, stop_len=5, run_len=5, filter_sigma=5, spee
 
 
 """
+dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
 movement_onset, speed = detect_movement_onset(dat["run"], run_len=5, stop_len=5)
 plt.plot(speed)
 plt.plot(movement_onset)
