@@ -21,7 +21,7 @@ run_onset, run_speed = movement.detect_movement_onset(run_data)
 # SET PARAMETERS
 det_window = 3
 
-def subset_from_data (neural_data, n, seed = 2020)
+def subset_from_data (neural_data, n, seed = 2020) #t
 ''' Sample n random columns from the input matrix
     Parameters
     ----------
