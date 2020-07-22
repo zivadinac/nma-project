@@ -64,9 +64,7 @@ def prepare_data(neural_data, run_onset, det_window):
             
 X, y = prepare_data(neural_data, run_onset, det_window)
 
-#%%
-
+#%% LOGISTIC REGRESSION without regularization
 decoder = LogisticRegressionCV()
 decoder.fit(X, y)
-y_hat = decoder.predict(X)
-acc = accuracy_score(y, y_hat)
+acc = decoder.score(X,y)
