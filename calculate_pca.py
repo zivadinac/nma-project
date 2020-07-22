@@ -3,26 +3,57 @@ import numpy as np
 from matplotlib import pyplot as plt
 import time
 
-fname = "stringer_spontaneous.npy"
-url = "https://osf.io/dpqaj/download"
+# fname = "stringer_spontaneous.npy"
+# url = "https://osf.io/dpqaj/download"
 
-if not os.path.isfile(fname):
-  try:
-    r = requests.get(url)
-  except requests.ConnectionError:
-    print("!!! Failed to download data !!!")
-  else:
-    if r.status_code != requests.codes.ok:
-      print("!!! Failed to download data !!!")
-    else:
-      with open(fname, "wb") as fid:
-        fid.write(r.content)
+# if not os.path.isfile(fname):
+#   try:
+#     r = requests.get(url)
+#   except requests.ConnectionError:
+#     print("!!! Failed to download data !!!")
+#   else:
+#     if r.status_code != requests.codes.ok:
+#       print("!!! Failed to download data !!!")
+#     else:
+#       with open(fname, "wb") as fid:
+#         fid.write(r.content)
 
-#@title Data loading
-dat = np.load('stringer_spontaneous.npy', allow_pickle=True).item()
+# #@title Data loading
+dat = np.load('./data/stringer_spontaneous.npy', allow_pickle=True).item()
+
 
 # Perform PCA on neural data
+def pca_projection(data,var_threshold=0.9):
+    """
+    Parameters:
+        data           -> expects matrix with shape (samples,features)
+        var_threshold  -> percentage of explained variance 
+    Returns:
+        data projected on k principal components explaining var_threshold percentage of variance
+    """
+    #calculate covariance matrix
+    n_samples = data.shape[0]
+    data = data - data.mean(axis=0)
+    cov =  (data.T @ data) / n_samples
+    
+    values, vectors = np.linalg.eig(X)
+    
+    var_explained = np.cumsum(values)/np.sum(values)
+    k = np.sum(var_explained<var_threshold)
+    
+    #values = values[var_explained<var_threshold]
+    #vectors = vectors[var_explained<var_threshold]
 
+    score_allPCs = data @ vectors
+    vectors_allPCs = vectors
+    score_sigPCs = score[:,:k]
+    vectors_sigPCs = vectors[:,:k]
+    
+    return score_sigPCs, vectors_sigPCs, score_allPCs
+
+data = dat['sresp'][:100,:].T
+score_sigPCs, vectors_sigPCs, score_allPCs = pca_projection(data,var_threshold=0.9)
+reconstructed =  (score_sigPCs @ vectors_sigPCs.T) + data.mean(axis=0)
 
 
 # Calculate Autocorrelation Matrix
@@ -48,9 +79,13 @@ print(end - start)
 #Take the subset of eigenvalues and eigenvectors that explain x percent of the variance
 var_explained = np.cumsum(values)/np.sum(values)
 threshold = 0.8
-values_ = values[var_explained<threshold]
-vectors_ = vectors[var_explained<threshold]
+
+
+# values_ = values[var_explained<threshold]
+# vectors_ = vectors[var_explained<threshold]
 K = np.sum(var_explained<threshold)
+values_subset = values[0:K]
+vectors_subset = vectors[0:K,:]
 
 plt.ylabel('Explained Variance')
 plt.xlabel('Number of Principal Components')
@@ -58,10 +93,10 @@ plt.plot(var_explained)
 plt.axhline(threshold,color='r')
 
 plt.show()
-K=100
+#K=100
 
 # Project Neural Data from Standard Basis into new Basis that is the Eigenvectors of the Covariance Matrix
-score = Neurons @ vectors
+score = Neurons @ vectors_subset
 Neurons_reconstructed =  (score[:, :K] @ vectors[:, :K].T) + Neurons_Mean
 
 
