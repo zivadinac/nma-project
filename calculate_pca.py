@@ -25,7 +25,7 @@ dat = np.load('stringer_spontaneous.npy', allow_pickle=True).item()
 
 
 
-# Calculate Autocorrelation Matrix
+# Calculate Covariance Matrix
 # If PCA takes too long reduce number of neurons
 start = time.time()
 num_neurons = 100
