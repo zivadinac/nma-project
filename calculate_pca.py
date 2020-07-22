@@ -56,7 +56,7 @@ score_sigPCs, vectors_sigPCs, score_allPCs = pca_projection(data,var_threshold=0
 reconstructed =  (score_sigPCs @ vectors_sigPCs.T) + data.mean(axis=0)
 
 
-# Calculate Autocorrelation Matrix
+# Calculate Covariance Matrix
 # If PCA takes too long reduce number of neurons
 start = time.time()
 num_neurons = 100
