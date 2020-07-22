@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecfe9336-c111-42c8-945f-ab83ffa494b1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calculate_pca.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculate_pca.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

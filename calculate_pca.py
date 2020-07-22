@@ -28,13 +28,13 @@ dat = np.load('stringer_spontaneous.npy', allow_pickle=True).item()
 # Calculate Covariance Matrix
 # If PCA takes too long reduce number of neurons
 start = time.time()
-num_neurons = 100
+num_neurons = 100 #set how many neurons to use
 Neurons = dat['sresp'][:num_neurons,:] #shape (11983, 7018)
 Neurons = Neurons.T
 Neurons_Mean =  np.mean(Neurons,axis=0)
 Neurons = Neurons - Neurons_Mean
 N_samples = Neurons.shape[0]
-X = (1/N_samples) * Neurons.T @ Neurons   #shape(11983,11983)
+covMat = (1/N_samples) * Neurons.T @ Neurons   #covariance matrix; shape(11983,11983)
 
 # Calculate Principal Components 
 values, vectors = np.linalg.eig(X) #eig -> eigenvalues and vectors in descending order
