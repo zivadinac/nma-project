@@ -20,7 +20,24 @@ run_onset, run_speed = movement.detect_movement_onset(run_data)
 
 # SET PARAMETERS
 det_window = 3
-        
+
+def subset_from_data (neural_data, n, seed = 2020)
+''' Sample n random columns from the input matrix
+    Parameters
+    ----------
+    neural_data : np.array of size neurons x timepoints 
+    n: sample size (integer) 
+    
+    Returns
+    -------
+    neural_data_subset: np.array of size n x timepoits
+
+'''
+    np.random.seed (seed)
+    neural_data_subset = neural_data[np.random.randint(0, len(neural_data), size = n)]
+    
+    return neural_data_subset
+
 def prepare_data(neural_data, run_onset, det_window):
     
     ''' Prepare data from Stringer dataset to Neuroduck GLM. 
