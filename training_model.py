@@ -9,6 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import movement 
 from sklearn.linear_model import LogisticRegressionCV
+from sklearn.metrics import accuracy_score
+
 
 #IMPORT DATA
 dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
@@ -17,7 +19,7 @@ run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
 
 # SET PARAMETERS
-det_window = 3 
+det_window = 3
         
 def prepare_data(neural_data, run_onset, det_window):
     
@@ -35,6 +37,8 @@ def prepare_data(neural_data, run_onset, det_window):
     feat_labels : 0 for no-run-onset, 1 for run-onset 
 
     '''
+    run_onset[:det_window+1]=0
+    
     features = np.zeros((2*run_onset.sum(), len(neural_data)))
     
     no_onset = np.zeros_like(run_onset)
@@ -58,5 +62,9 @@ def prepare_data(neural_data, run_onset, det_window):
     
     return features, feat_labels         
             
-x, y = prepare_data(neural_data, run_onset, det_window)
+X, y = prepare_data(neural_data, run_onset, det_window)
 
+#%% LOGISTIC REGRESSION without regularization
+decoder = LogisticRegressionCV()
+decoder.fit(X, y)
+acc = decoder.score(X,y)
