@@ -1,29 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul 21 17:45:30 2020
-
-@author: Neuroducks
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 import movement 
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.linear_model import LogisticRegression 
-from sklearn.model_selection import cross_val_score,  train_test_split, ShuffleSplit
 from sklearn.decomposition import PCA
 
-from sklearn.metrics import accuracy_score
-
-seed = np.random.seed(2020)
-
-# #IMPORT DATA
-dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
-neural_data = dat['sresp']
-run_data = dat['run']
-run_onset, run_speed = movement.detect_movement_onset(run_data)
-
-# SET PARAMETERS
-det_window = 3
 
 def prepare_data(neural_data, run_onset, det_window, perc_test):
     
@@ -77,8 +58,6 @@ def prepare_data(neural_data, run_onset, det_window, perc_test):
     
     return train_features, train_labels, test_features, test_labels         
             
-
-#%%
 def extract_features(neural_data, neurons_idx=None, pca_comp_num=None):
     if neurons_idx is None and pca_comp_num is None:
         return neural_data
@@ -91,15 +70,28 @@ def extract_features(neural_data, neurons_idx=None, pca_comp_num=None):
         pca.fit(neural_data.T)
         return pca.transform(neural_data.T).T
 
+# set seed
+seed = np.random.seed(2020)
+
+# #IMPORT DATA
+dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
+neural_data = dat['sresp']
+run_data = dat['run']
+run_onset, run_speed = movement.detect_movement_onset(run_data)
+
 #%% LOGISTIC REGRESSION  - train model
+# SET PARAMETERS
+C = np.logspace(-4, 0, 20)
+det_window = 3
 neuron_num = 400
-neurons_idx = np.random.randint(0, len(neural_data), neuron_num)
 pca_com = 200
-# feat = extract_features(neural_data, neurons_idx=neurons_idx)
-feat = extract_features(neural_data, pca_comp_num =pca_com)
+
+#use only one of this two lines!
+feat = extract_features(neural_data, neurons_idx=np.random.randint(0, len(neural_data), neuron_num))
+#feat = extract_features(neural_data, pca_comp_num =pca_com)
+
 X_train, y_train, X_test, y_test = prepare_data(feat, run_onset, det_window, 0.2)
 
-C = np.logspace(-4, 0, 20)
 decoders = {}
 train_acc = {}
 test_acc = {}
