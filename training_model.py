@@ -10,6 +10,7 @@ import movement
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.linear_model import LogisticRegression 
 from sklearn.model_selection import cross_val_score,  train_test_split, ShuffleSplit
+from sklearn.decomposition import PCA
 
 from sklearn.metrics import accuracy_score
 
@@ -76,9 +77,28 @@ def prepare_data(neural_data, run_onset, det_window, perc_test):
     
     return train_features, train_labels, test_features, test_labels         
             
-X_train, y_train, X_test, y_test = prepare_data(neural_data, run_onset, det_window, 0.2)
 
-#%% LOGISTIC REGRESSION without regularization
+#%%
+def extract_features(neural_data, neurons_idx=None, pca_comp_num=None):
+    if neurons_idx is None and pca_comp_num is None:
+        return neural_data
+
+    if neurons_idx is not None:
+        return neural_data[neurons_idx, :]
+ 
+    if pca_comp_num is not None:
+        pca = PCA(pca_comp_num)
+        pca.fit(neural_data.T)
+        return pca.transform(neural_data.T).T
+
+#%% LOGISTIC REGRESSION  - train model
+neuron_num = 400
+neurons_idx = np.random.randint(0, len(neural_data), neuron_num)
+pca_com = 200
+# feat = extract_features(neural_data, neurons_idx=neurons_idx)
+feat = extract_features(neural_data, pca_comp_num =pca_com)
+X_train, y_train, X_test, y_test = prepare_data(feat, run_onset, det_window, 0.2)
+
 C = np.logspace(-4, 0, 20)
 decoders = {}
 train_acc = {}
@@ -92,4 +112,3 @@ for penalty in ['l1', 'l2']:
     test_acc[penalty] = acc_test
     train_acc[penalty] = acc_train
 
-#%% MODEL SELECTION
