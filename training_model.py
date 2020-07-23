@@ -13,6 +13,8 @@ from sklearn.model_selection import cross_val_score,  train_test_split, ShuffleS
 
 from sklearn.metrics import accuracy_score
 
+seed = np.random.seed(2020)
+
 # #IMPORT DATA
 dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
 neural_data = dat['sresp']
@@ -77,9 +79,17 @@ def prepare_data(neural_data, run_onset, det_window, perc_test):
 X_train, y_train, X_test, y_test = prepare_data(neural_data, run_onset, det_window, 0.2)
 
 #%% LOGISTIC REGRESSION without regularization
-decoder = LogisticRegressionCV()
-decoder.fit(X_train, y_train)
-acc_test = decoder.score(X_test,y_test)
-acc_train = decoder.score(X_train,y_train)
+C = np.logspace(-4, 0, 20)
+decoders = {}
+train_acc = {}
+test_acc = {}
+for penalty in ['l1', 'l2']:
+    decoder = LogisticRegressionCV(Cs = C, penalty=penalty, solver='liblinear')
+    decoder.fit(X_train, y_train)
+    acc_test = decoder.score(X_test,y_test)
+    acc_train = decoder.score(X_train,y_train)
+    decoders[penalty] = decoder
+    test_acc[penalty] = acc_test
+    train_acc[penalty] = acc_train
 
 #%% MODEL SELECTION
