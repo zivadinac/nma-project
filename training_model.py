@@ -22,24 +22,7 @@ run_onset, run_speed = movement.detect_movement_onset(run_data)
 # SET PARAMETERS
 det_window = 3
 
-def subset_from_data (neural_data, n, seed = 2020):
-
-    ''' Sample n random columns from the input matrix
-        Parameters
-        ----------
-        neural_data : np.array of size neurons x timepoints 
-        n: sample size (integer) 
-        
-        Returns
-        -------
-        neural_data_subset: np.array of size n x timepoits
-    '''
-    np.random.seed (seed)
-    neural_data_subset = neural_data[np.random.randint(0, len(neural_data), size = n)]
-    
-    return neural_data_subset
-
-def prepare_data(neural_data, run_onset, det_window):
+def prepare_data(neural_data, run_onset, det_window, perc_test):
     
     ''' Prepare data from Stringer dataset to Neuroduck GLM. 
     
@@ -73,66 +56,30 @@ def prepare_data(neural_data, run_onset, det_window):
     
     feat_labels = np.zeros(2*run_onset.sum())
     feat_labels[0:run_onset.sum()] = 1
-    
+        
     shuffle_idx = np.random.permutation(len(feat_labels))
-    features = features[shuffle_idx, :]
-    feat_labels = feat_labels[shuffle_idx]
     
-    return features, feat_labels         
+    n_test = int(perc_test * len(features))
+    
+    test_idx_0 = shuffle_idx[np.where(feat_labels == 0)][0:n_test // 2]
+    train_idx_0 = shuffle_idx[np.where(feat_labels == 0)][n_test // 2:]
+    test_idx_1 = shuffle_idx[np.where(feat_labels == 1)][0:n_test // 2]
+    train_idx_1 = shuffle_idx[np.where(feat_labels == 1)][n_test // 2:]
+ 
+    train_features = features[np.hstack([train_idx_0, train_idx_1]), :]
+    train_labels = feat_labels[np.hstack([train_idx_0, train_idx_1])]
+  
+    test_features = features[np.hstack([test_idx_0, test_idx_1]), :]
+    test_labels = feat_labels[np.hstack([test_idx_0, test_idx_1])]
+    
+    return train_features, train_labels, test_features, test_labels         
             
-X, y = prepare_data(neural_data, run_onset, det_window)
+X_train, y_train, X_test, y_test = prepare_data(neural_data, run_onset, det_window, 0.2)
 
 #%% LOGISTIC REGRESSION without regularization
 decoder = LogisticRegressionCV()
-decoder.fit(X, y)
-acc = decoder.score(X,y)
+decoder.fit(X_train, y_train)
+acc_test = decoder.score(X_test,y_test)
+acc_train = decoder.score(X_train,y_train)
 
-#%% SET APPROPIATE HYPERPARAMETERS FOR REGULARIZATION (from NMA google colaborate)
-
-def model_selection(X, y, C_values):
-  """Compute CV accuracy for each C value.
-
-  Args:
-    X (2D array): Data matrix
-    y (1D array): Label vector
-    C_values (1D array): Array of hyperparameter values
-
-  Returns:
-    accuracies (1D array): CV accuracy with each value of C
-
-  """
-  accuracies = []
-  for C in C_values:
-
-    # Initialize and fit the model
-    # (Hint, you may need to set max_iter)
-    model = LogisticRegression(penalty="l2", C=C, max_iter=1000)
-
-
-    # Get the accuracy for each test split
-    cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
-    accs = cross_val_score(model, X, y, cv=cv)
-
-    # Store the average test accuracy for this value of C
-    accuracies.append(accs.mean())
-
-  return accuracies
-
-def plot_model_selection(C_values, accuracies):
-  """Plot the accuracy curve over log-spaced C values."""
-  ax = plt.figure().subplots()
-  ax.set_xscale("log")
-  ax.plot(C_values, accuracies, marker="o")
-  best_C = C_values[np.argmax(accuracies)]
-  ax.set(
-      xticks=C_values,
-      xlabel="$C$",
-      ylabel="Cross-validated accuracy",
-      title=f"Best C: {best_C:1g} ({np.max(accuracies):.2%})",
-      )
-
-
-C_values = np.logspace(-4, 4, 9) # Use log-spaced values for C
-
-accuracies = model_selection(X, y, C_values)
-plot_model_selection(C_values, accuracies)
+#%% MODEL SELECTION
