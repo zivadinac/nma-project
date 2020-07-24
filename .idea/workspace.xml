@@ -20,6 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecfe9336-c111-42c8-945f-ab83ffa494b1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/explore_data_Andrea_notes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/training_model_Andrea_notes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +38,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Python.calculate_pca">
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\GitHub\nma-project" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.training_model_Andrea_notes">
     <configuration name="calculate_pca" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="nma-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -79,8 +89,52 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="training_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="nma-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="training_model_Andrea_notes" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="nma-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_model_Andrea_notes.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.training_model_Andrea_notes" />
+        <item itemvalue="Python.training_model" />
         <item itemvalue="Python.calculate_pca" />
       </list>
     </recent_temporary>
@@ -108,28 +162,57 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595440034326">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1506" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440034326" />
-    <state width="1899" height="221" key="GridCell.Tab.0.bottom" timestamp="1595440401408">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state width="949" height="338" key="GridCell.Tab.0.bottom" timestamp="1595629599457">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1899" height="221" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440401408" />
-    <state width="1899" height="221" key="GridCell.Tab.0.center" timestamp="1595440401408">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state width="1394" height="134" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211428" />
+    <state width="925" height="134" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
+    <state width="949" height="338" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1595629599457" />
+    <state width="949" height="338" key="GridCell.Tab.0.center" timestamp="1595629599456">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1899" height="221" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440401408" />
-    <state width="1899" height="221" key="GridCell.Tab.0.left" timestamp="1595440401408">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state width="1394" height="134" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211427" />
+    <state width="925" height="134" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
+    <state width="949" height="338" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1595629599456" />
+    <state width="949" height="338" key="GridCell.Tab.0.left" timestamp="1595629599455">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1899" height="221" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440401408" />
-    <state width="1899" height="221" key="GridCell.Tab.0.right" timestamp="1595440401408">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state width="1394" height="134" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211427" />
+    <state width="925" height="134" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383473" />
+    <state width="949" height="338" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1595629599455" />
+    <state width="949" height="338" key="GridCell.Tab.0.right" timestamp="1595629599456">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1899" height="221" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440401408" />
+    <state width="1394" height="134" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211428" />
+    <state width="925" height="134" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
+    <state width="949" height="338" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1595629599456" />
+    <state width="949" height="338" key="GridCell.Tab.1.bottom" timestamp="1595629599459">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="949" height="338" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595601352726" />
+    <state width="949" height="338" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1595629599459" />
+    <state width="949" height="338" key="GridCell.Tab.1.center" timestamp="1595629599458">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="949" height="338" key="GridCell.Tab.1.center/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595601352726" />
+    <state width="949" height="338" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1595629599458" />
+    <state width="949" height="338" key="GridCell.Tab.1.left" timestamp="1595629599457">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="949" height="338" key="GridCell.Tab.1.left/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595601352726" />
+    <state width="949" height="338" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1595629599457" />
+    <state width="949" height="338" key="GridCell.Tab.1.right" timestamp="1595629599458">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="949" height="338" key="GridCell.Tab.1.right/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595601352726" />
+    <state width="949" height="338" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1595629599458" />
     <state width="498" height="446" key="SwitcherDM" timestamp="1595438905555">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -138,9 +221,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1151" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595437140542" />
-    <state x="-1319" y="246" width="700" height="530" key="recent.locations.popup" timestamp="1595347513532">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="401" y="161" width="598" height="448" key="recent.locations.popup" timestamp="1595524700457">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1319" y="246" width="700" height="530" key="recent.locations.popup/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595347513532" />
+    <state x="401" y="161" width="598" height="448" key="recent.locations.popup/0.0.1280.680@0.0.1280.680" timestamp="1595524700457" />
   </component>
 </project>
