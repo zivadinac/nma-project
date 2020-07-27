@@ -4,6 +4,11 @@ import movement
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.linear_model import LogisticRegression 
 from sklearn.decomposition import PCA
+import skopt
+from skopt import gp_minimize, forest_minimize
+from skopt.space import Real, Categorical, Integer
+from skopt.utils import use_named_args
+from skopt.plots import *
 
 
 def prepare_data(neural_data, run_onset, det_window, perc_test):
@@ -70,37 +75,67 @@ def extract_features(neural_data, neurons_idx=None, pca_comp_num=None):
         pca.fit(neural_data.T)
         return pca.transform(neural_data.T).T
 
+decoders = {}
+train_acc = {}
+test_acc = {}
+def model(det_window, penalty, neuron_num=None, pca_com=None):
+    if neuron_num is not None:
+        neurons_idx = np.random.randint(0, len(neural_data), neuron_num)
+        feat = extract_features(neural_data, neurons_idx=neurons_idx)
+        key = neuron_num
+    elif pca_com is not None:
+        feat = extract_features(neural_data, pca_comp_num=pca_com)
+        key = pca_com
+    else:
+        raise ValueError("Either `neuron_num` or `pca_com` must be provided.")
+
+    X_train, y_train, X_test, y_test = prepare_data(feat, run_onset, det_window, 0.2)
+    C = np.logspace(-8, 0, 50)
+
+    decoder = LogisticRegressionCV(Cs=C, penalty=penalty, solver='liblinear', max_iter=100)
+    decoder.fit(X_train, y_train)
+    acc_test = decoder.score(X_test, y_test)
+    acc_train = decoder.score(X_train, y_train)
+
+    decoders[(key, det_window, penalty)] = decoder
+    train_acc[(key, det_window, penalty)] = acc_train
+    test_acc[(key, det_window, penalty)] = acc_test
+    return np.abs(acc_train - acc_test) if acc_test > 0.7 else 100
+
+def model_pca(args):
+    pca_com, det_window, penalty = args
+    return model(det_window, penalty, pca_com=pca_com)
+
+def model_neurons(args):
+    neuron_num, det_window, penalty = args
+    return model(det_window, penalty, neuron_num=neuron_num)
+
 # set seed
 seed = np.random.seed(2020)
 
-# #IMPORT DATA
+#IMPORT DATA
 dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
 neural_data = dat['sresp']
 run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
 
-#%% LOGISTIC REGRESSION  - train model
-# SET PARAMETERS
-C = np.logspace(-4, 0, 20)
-det_window = 3
-neuron_num = 400
-pca_com = 200
+pca_com = Integer(low=1, high=100)
+neuron_num = Integer(low=200, high=len(neural_data))
+det_window = Integer(low=1, high=7)
+penalty = Categorical(categories=["l1", "l2"], name="penalty")
 
-#use only one of this two lines!
-feat = extract_features(neural_data, neurons_idx=np.random.randint(0, len(neural_data), neuron_num))
-#feat = extract_features(neural_data, pca_comp_num =pca_com)
+if False:
+    dimensions = [pca_com, det_window, penalty]
+    default_hyperparams = [50, 3, "l1"]
+    hp_model = model_pca
+else:
+    dimensions = [neuron_num, det_window, penalty]
+    default_hyperparams = [200, 3, "l1"]
+    hp_model = model_neurons
 
-X_train, y_train, X_test, y_test = prepare_data(feat, run_onset, det_window, 0.2)
+res = gp_minimize(func=hp_model, dimensions=dimensions, n_calls=20, x0=default_hyperparams)
+opt_hp = tuple(res.x)
 
-decoders = {}
-train_acc = {}
-test_acc = {}
-for penalty in ['l1', 'l2']:
-    decoder = LogisticRegressionCV(Cs = C, penalty=penalty, solver='liblinear')
-    decoder.fit(X_train, y_train)
-    acc_test = decoder.score(X_test,y_test)
-    acc_train = decoder.score(X_train,y_train)
-    decoders[penalty] = decoder
-    test_acc[penalty] = acc_test
-    train_acc[penalty] = acc_train
+print(f"HP search done: {opt_hp}: {res.fun}. Train acc: {train_acc[opt_hp]}, test acc: {test_acc[opt_hp]}")
+d = decoders[opt_hp]
 
