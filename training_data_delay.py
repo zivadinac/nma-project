@@ -144,25 +144,22 @@ neural_data = dat['sresp']
 run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
 
-#%% LOGISTIC REGRESSION  - train model
+#%% LOGISTIC REGRESSION ON NEURAL DATA - train model
 # SET PARAMETERS
 C = np.logspace(-4, 0, 20)
-det_window =4
-delay = 0
+det_window = 1
 neuron_num = 4000
-pca_com = 200
-
-#use only one of this two lines!
+pca_com = 13
 
 #use only one of this two lines!
 feat = extract_features(neural_data, neurons_idx=np.random.randint(0, len(neural_data), neuron_num))
-#feat = extract_features(neural_data, pca_comp_num =pca_com)
+# feat = extract_features(neural_data, pca_comp_num =pca_com)
 
 n_test = 5
-test_acc = np.zeros([n_test, 2])
-train_acc = np.zeros([n_test, 2])
+test_acc = np.zeros([len(delay_bins), 2])
+train_acc = np.zeros([len(delay_bins), 2])
 
-delay_bins = [0, 5, 10, 20, 30]
+delay_bins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
 
 for delay in range(0,len(delay_bins)):
     X_train, y_train, X_test, y_test = prepare_data_delay(feat, run_onset, det_window, delay, 0.2)
@@ -196,13 +193,13 @@ ax2.legend()
                   
 fig.suptitle (f'frate-GLM on {neuron_num} neurons with a time window of {det_window} timebins')
 
-#%% GLM ON MESSY DATA
+
+#%% GLM ON MESSY NEURAL DATA
 neural_data_messy = neural_data[:,np.random.permutation(len(neural_data[0,:]))]
 
 # SET PARAMETERS
 C = np.logspace(-4, 0, 20)
 det_window =5
-delay = 0
 neuron_num = 2000
 pca_com = 200
 
@@ -248,6 +245,4 @@ ax2.set(title= "l2 regularization (f rate)", xlabel= "delay(timebins)")
 ax2.legend()
 
 fig.suptitle (f'MESSY DATA: frate-GLM on {neuron_num} neurons with a time window of {det_window} timebins')
-
-
 
