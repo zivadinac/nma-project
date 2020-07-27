@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import movement 
@@ -124,7 +125,8 @@ neuron_num = Integer(low=200, high=len(neural_data))
 det_window = Integer(low=1, high=7)
 penalty = Categorical(categories=["l1", "l2"], name="penalty")
 
-if False:
+use_pca = False
+if use_pca:
     dimensions = [pca_com, det_window, penalty]
     default_hyperparams = [50, 3, "l1"]
     hp_model = model_pca
@@ -138,4 +140,7 @@ opt_hp = tuple(res.x)
 
 print(f"HP search done: {opt_hp}: {res.fun}. Train acc: {train_acc[opt_hp]}, test acc: {test_acc[opt_hp]}")
 d = decoders[opt_hp]
+
+with open(f"opt_hp_{'pca' if use_pca else 'neurons'}.pck", "wb") as opt_hp_f:
+    pickle.dump(res, opt_hp_f, protocol=4)
 
