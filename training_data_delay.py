@@ -194,7 +194,60 @@ ax2.plot(delay_bins, train_acc[:, 1], 'r.-', label='train acc')
 ax2.set(title= "l2 regularization (f rate)", xlabel= "delay(timebins)")
 ax2.legend()
                   
+fig.suptitle (f'frate-GLM on {neuron_num} neurons with a time window of {det_window} timebins')
 
+#%% GLM ON MESSY DATA
+neural_data_messy = neural_data[:,np.random.permutation(len(neural_data[0,:]))]
+
+# SET PARAMETERS
+C = np.logspace(-4, 0, 20)
+det_window =5
+delay = 0
+neuron_num = 2000
+pca_com = 200
+
+#use only one of this two lines!
+
+#use only one of this two lines!
+feat = extract_features(neural_data_messy, neurons_idx=np.random.randint(0, len(neural_data_messy), neuron_num))
+#feat = extract_features(neural_data, pca_comp_num =pca_com)
+
+delay_bins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
+
+test_acc = np.zeros([len(delay_bins), 2])
+train_acc = np.zeros([len(delay_bins), 2])
+
+for delay in range(0,len(delay_bins)):
+    X_train, y_train, X_test, y_test = prepare_data_delay(feat, run_onset, det_window, delay, 0.2)
+    
+    decoder = LogisticRegressionCV(Cs = C, penalty="l1", solver='liblinear')
+    decoder.fit(X_train, y_train)
+    acc_test = decoder.score(X_test,y_test)
+    acc_train = decoder.score(X_train,y_train)
+    test_acc[delay, 0] = acc_test
+    train_acc[delay,0] = acc_train
+    
+    decoder = LogisticRegressionCV(Cs = C, penalty="l2", solver='liblinear')
+    decoder.fit(X_train, y_train)
+    acc_test = decoder.score(X_test,y_test)
+    acc_train = decoder.score(X_train,y_train)
+    test_acc[delay, 1] = acc_test
+    train_acc[delay,1] = acc_train
+
+# PLOT
+fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(16, 6))
+                      
+ax1.plot(delay_bins, test_acc[:,0].flatten(), 'b.-', label='test acc')
+ax1.plot(delay_bins, train_acc[:, 0].flatten(), 'r.-', label='train acc')
+ax1.set(title = "l1 regularization (f rate)", xlabel= "delay(timebins)")
+ax1.legend()
+                
+ax2.plot(delay_bins, test_acc[:,1], 'b.-', label='test acc')
+ax2.plot(delay_bins, train_acc[:, 1], 'r.-', label='train acc')
+ax2.set(title= "l2 regularization (f rate)", xlabel= "delay(timebins)")
+ax2.legend()
+
+fig.suptitle (f'MESSY DATA: frate-GLM on {neuron_num} neurons with a time window of {det_window} timebins')
 
 
 
