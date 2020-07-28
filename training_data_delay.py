@@ -155,11 +155,11 @@ pca_com = 13
 feat = extract_features(neural_data, neurons_idx=np.random.randint(0, len(neural_data), neuron_num))
 # feat = extract_features(neural_data, pca_comp_num =pca_com)
 
-n_test = 5
+delay_bins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
+
 test_acc = np.zeros([len(delay_bins), 2])
 train_acc = np.zeros([len(delay_bins), 2])
 
-delay_bins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
 
 for delay in range(0,len(delay_bins)):
     X_train, y_train, X_test, y_test = prepare_data_delay(feat, run_onset, det_window, delay, 0.2)
