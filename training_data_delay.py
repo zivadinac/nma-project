@@ -7,9 +7,9 @@ Created on Sun Jul 26 23:06:37 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
-import movement 
+import movement
 from sklearn.linear_model import LogisticRegressionCV
-from sklearn.linear_model import LogisticRegression 
+from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
 
 
@@ -68,7 +68,6 @@ def prepare_data(neural_data, run_onset, det_window, perc_test):
 
 
 def prepare_data_delay(neural_data, run_onset, det_window, delay, perc_test=.2):
-    seed = np.random.seed(2020)
 
     ''' Prepare data from Stringer dataset to Neuroduck GLM. 
     
