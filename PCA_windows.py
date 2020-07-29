@@ -35,40 +35,45 @@ neural_data = dat['sresp']
 run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
 
-#%% LOGISTIC REGRESSION ON NEURAL DATA - train model
-# SET PARAMETERS
-C = np.logspace(-4, 0, 20)
-det_window = 13
-neuron_num = 4000
-pca_com = 1
+# #%% LOGISTIC REGRESSION ON NEURAL DATA - train model
+# # SET PARAMETERS
+# C = np.logspace(-4, 0, 20)
+# det_window = 13
+# neuron_num = 4000
+# pca_com = 1
 
-# CORR of PCA in windows
+# %% CORR of PCA in windows
 # window_corr = np.zeros([(neural_data.shape[1]-(det_window+1)),1])
-window_corr = []
+# window_corr = []
 
-for idx in range(det_window+1, len(neural_data[0,:])):
-    neural_data_window = neural_data[:,(idx-det_window):idx]
-    feat_w = extract_features(neural_data_window, pca_comp_num =pca_com)
-    run_w = run_data[(idx-det_window):idx]
-    window_corr.append(np.corrcoef(feat_w.flatten(), run_w.flatten()))
+# for idx in range(det_window+1, len(neural_data[0,:])):
+#     neural_data_window = neural_data[:,(idx-det_window):idx]
+#     feat_w = extract_features(neural_data_window, pca_comp_num =pca_com)
+#     run_w = run_data[(idx-det_window):idx]
+#     window_corr.append(np.corrcoef(feat_w.flatten(), run_w.flatten()))
 
-plt.plot(window_corr, label= 'corr 1PC-run speed')
-plt.plot(run_onset[det_window+1:]*np.max(window_corr), 'or', label = 'run onset')
-plt.xlim(0,1000)
-plt.title('correlation 1PC with run velocity')
-plt.legend()
+# plt.plot(window_corr, label= 'corr 1PC-run speed')
+# plt.plot(run_onset[det_window+1:]*np.max(window_corr), 'or', label = 'run onset')
+# plt.xlim(0,1000)
+# plt.title('correlation 1PC with run velocity')
+# plt.legend()
 
-# CORR of PCA of all neural vector
+#%% CORR of PCA of all neural vector
 pca_com = 2000
 feat = extract_features(neural_data, pca_comp_num =pca_com)
 
 corr_PC_run = []
 for PC in range(pca_com):
-    corr_PC_run.append(np.corrcoef(feat[PC,:].flatten(),run_data.flatten())[0])
+    corr_PC_run.append(np.corrcoef(feat[PC,:].flatten(),run_data.flatten())[0,1])
 
-plt.plot(corr_PC_run, label= 'corr PCs - run speed')
-plt.plot(run_onset[det_window+1:]*np.max(window_corr), 'or')
-plt.xlim(0,1000)
+plt.title('(Neural-PC x Running-Speed)-Correlation')
+plt.xlabel('Principal Components')
+plt.ylabel('Pearson Correlation')
+plt.plot(corr_PC_run[0:100],'--.')
+
+# plt.plot(corr_PC_run, label= 'corr PCs - run speed')
+# plt.plot(run_onset[det_window+1:]*np.max(window_corr), 'or')
+# plt.xlim(0,1000)
 
 
 #use only one of this two lines!
