@@ -143,6 +143,18 @@ neural_data = dat['sresp']
 run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
 
+# Plot a heatmap of the data
+plt.figure()
+plt.pcolormesh(neural_data[:, :200], vmin=0, vmax=100)
+plt.colorbar()
+
+# Plot a z-scored heatmap
+plt.figure()
+data_zscored = scipy.stats.zscore(neural_data)
+plt.pcolormesh(data_zscored[:, :200], vmin=0, vmax=100, cmap='jet')  # vmax=30
+plt.colorbar()
+
+
 #%% GLM in neural data (frate)
 
 # SET PARAMETERS
