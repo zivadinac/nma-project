@@ -21,6 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ecfe9336-c111-42c8-945f-ab83ffa494b1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data_delay.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data_delay.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +45,7 @@
       <recent name="C:\GitHub\nma-project" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.PCA_windows">
+  <component name="RunManager" selected="Python.training_data_delay">
     <configuration name="PCA_windows" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="nma-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,6 +109,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="training_data_delay" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="nma-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_data_delay.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="training_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="nma-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -152,6 +174,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.training_data_delay" />
         <item itemvalue="Python.PCA_windows" />
         <item itemvalue="Python.training_model_Andrea_notes" />
         <item itemvalue="Python.training_model" />
@@ -189,30 +212,30 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1506" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595440034326" />
-    <state width="923" height="159" key="GridCell.Tab.0.bottom" timestamp="1595882179205">
+    <state width="919" height="159" key="GridCell.Tab.0.bottom" timestamp="1596090287600">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1394" height="134" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211428" />
-    <state width="925" height="134" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
-    <state width="923" height="159" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1595882179205" />
-    <state width="923" height="159" key="GridCell.Tab.0.center" timestamp="1595882179205">
+    <state width="921" height="159" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1596032442605" />
+    <state width="919" height="159" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1596090287600" />
+    <state width="919" height="159" key="GridCell.Tab.0.center" timestamp="1596090287600">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1394" height="134" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211427" />
-    <state width="925" height="134" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
-    <state width="923" height="159" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1595882179205" />
-    <state width="923" height="159" key="GridCell.Tab.0.left" timestamp="1595882179205">
+    <state width="921" height="159" key="GridCell.Tab.0.center/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1596032442604" />
+    <state width="919" height="159" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1596090287600" />
+    <state width="919" height="159" key="GridCell.Tab.0.left" timestamp="1596090287600">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1394" height="134" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211427" />
-    <state width="925" height="134" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383473" />
-    <state width="923" height="159" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1595882179205" />
-    <state width="923" height="159" key="GridCell.Tab.0.right" timestamp="1595882179205">
+    <state width="921" height="159" key="GridCell.Tab.0.left/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1596032442604" />
+    <state width="919" height="159" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1596090287600" />
+    <state width="919" height="159" key="GridCell.Tab.0.right" timestamp="1596090287600">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1394" height="134" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1595611211428" />
-    <state width="925" height="134" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1595604383474" />
-    <state width="923" height="159" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1595882179205" />
+    <state width="921" height="159" key="GridCell.Tab.0.right/0.0.1280.680/-1920.0.1920.1040@0.0.1280.680" timestamp="1596032442605" />
+    <state width="919" height="159" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1596090287600" />
     <state width="949" height="338" key="GridCell.Tab.1.bottom" timestamp="1595629599459">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

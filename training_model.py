@@ -79,7 +79,7 @@ def extract_features(neural_data, neurons_idx=None, pca_comp_num=None):
 decoders = {}
 train_acc = {}
 test_acc = {}
-def model(det_window, penalty, neuron_num=None, pca_com=None):
+def model(neural_data, run_onset, det_window, penalty, neuron_num=None, pca_com=None):
     if neuron_num is not None:
         neurons_idx = np.random.randint(0, len(neural_data), neuron_num)
         feat = extract_features(neural_data, neurons_idx=neurons_idx)
@@ -103,44 +103,54 @@ def model(det_window, penalty, neuron_num=None, pca_com=None):
     test_acc[(key, det_window, penalty)] = acc_test
     return np.abs(acc_train - acc_test) if acc_test > 0.7 else 100
 
+def load_data(path='data/stringer_spontaneous.npy'):
+    dat = np.load(path, allow_pickle=True).item()
+    neural_data = dat['sresp']
+    run_data = dat['run']
+    run_onset, run_speed = movement.detect_movement_onset(run_data)
+    return neural_data, run_onset, run_speed
+
 def model_pca(args):
+    neural_data, run_onset, run_speed = load_data()
     pca_com, det_window, penalty = args
-    return model(det_window, penalty, pca_com=pca_com)
+    return model(neural_data, run_onset, det_window, penalty, pca_com=pca_com)
 
 def model_neurons(args):
+    neural_data, run_onset, run_speed = load_data()
     neuron_num, det_window, penalty = args
-    return model(det_window, penalty, neuron_num=neuron_num)
+    return model(neural_data, run_onset, det_window, penalty, neuron_num=neuron_num)
 
+def clean_dicts():
+    decoders = {}
+    train_acc = {}
+    test_acc = {}
 # set seed
 seed = np.random.seed(2020)
 
-#IMPORT DATA
-dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
-neural_data = dat['sresp']
-run_data = dat['run']
-run_onset, run_speed = movement.detect_movement_onset(run_data)
+if __name__ == "__main__":
+    #IMPORT DATA
 
-pca_com = Integer(low=1, high=100)
-neuron_num = Integer(low=200, high=len(neural_data))
-det_window = Integer(low=1, high=7)
-penalty = Categorical(categories=["l1", "l2"], name="penalty")
+    pca_com = Integer(low=1, high=100)
+    neuron_num = Integer(low=200, high=11983)
+    det_window = Integer(low=1, high=7)
+    penalty = Categorical(categories=["l1", "l2"], name="penalty")
 
-use_pca = False
-if use_pca:
-    dimensions = [pca_com, det_window, penalty]
-    default_hyperparams = [50, 3, "l1"]
-    hp_model = model_pca
-else:
-    dimensions = [neuron_num, det_window, penalty]
-    default_hyperparams = [200, 3, "l1"]
-    hp_model = model_neurons
+    use_pca = True
+    if use_pca:
+        dimensions = [pca_com, det_window, penalty]
+        default_hyperparams = [50, 3, "l1"]
+        hp_model = model_pca
+    else:
+        dimensions = [neuron_num, det_window, penalty]
+        default_hyperparams = [200, 3, "l1"]
+        hp_model = model_neurons
 
-res = gp_minimize(func=hp_model, dimensions=dimensions, n_calls=20, x0=default_hyperparams)
-opt_hp = tuple(res.x)
+    res = gp_minimize(func=hp_model, dimensions=dimensions, n_calls=20, x0=default_hyperparams)
+    opt_hp = tuple(res.x)
 
-print(f"HP search done: {opt_hp}: {res.fun}. Train acc: {train_acc[opt_hp]}, test acc: {test_acc[opt_hp]}")
-d = decoders[opt_hp]
+    print(f"HP search done: {opt_hp}: {res.fun}. Train acc: {train_acc[opt_hp]}, test acc: {test_acc[opt_hp]}")
+    d = decoders[opt_hp]
 
-with open(f"opt_hp_{'pca' if use_pca else 'neurons'}.pck", "wb") as opt_hp_f:
-    pickle.dump(res, opt_hp_f, protocol=4)
+    with open(f"opt_hp_{'pca' if use_pca else 'neurons'}.pck", "wb") as opt_hp_f:
+        pickle.dump(res, opt_hp_f, protocol=4)
 

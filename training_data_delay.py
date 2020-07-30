@@ -6,10 +6,11 @@ Created on Sun Jul 26 23:06:37 2020
 """
 
 import numpy as np
+import scipy as sp
 import matplotlib.pyplot as plt
-import movement 
+import movement
 from sklearn.linear_model import LogisticRegressionCV
-from sklearn.linear_model import LogisticRegression 
+from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
 
 
@@ -68,7 +69,6 @@ def prepare_data(neural_data, run_onset, det_window, perc_test):
 
 
 def prepare_data_delay(neural_data, run_onset, det_window, delay, perc_test=.2):
-    seed = np.random.seed(2020)
 
     ''' Prepare data from Stringer dataset to Neuroduck GLM. 
     
@@ -143,6 +143,18 @@ dat = np.load('data/stringer_spontaneous.npy', allow_pickle=True).item()
 neural_data = dat['sresp']
 run_data = dat['run']
 run_onset, run_speed = movement.detect_movement_onset(run_data)
+
+# Plot a heatmap of the data
+plt.figure()
+plt.pcolormesh(neural_data[:, :200], vmin=0, vmax=100)
+plt.colorbar()
+
+# Plot a z-scored heatmap
+# plt.figure()
+# data_zscored = sp.stats.zscore(neural_data)
+# plt.pcolormesh(data_zscored[:, :200], vmin=0, vmax=100, cmap='jet')  # vmax=30
+# plt.colorbar()
+
 
 #%% GLM in neural data (frate)
 
