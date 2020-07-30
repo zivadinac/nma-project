@@ -6,6 +6,7 @@ Created on Sun Jul 26 23:06:37 2020
 """
 
 import numpy as np
+import scipy as sp
 import matplotlib.pyplot as plt
 import movement
 from sklearn.linear_model import LogisticRegressionCV
@@ -149,10 +150,10 @@ plt.pcolormesh(neural_data[:, :200], vmin=0, vmax=100)
 plt.colorbar()
 
 # Plot a z-scored heatmap
-plt.figure()
-data_zscored = scipy.stats.zscore(neural_data)
-plt.pcolormesh(data_zscored[:, :200], vmin=0, vmax=100, cmap='jet')  # vmax=30
-plt.colorbar()
+# plt.figure()
+# data_zscored = sp.stats.zscore(neural_data)
+# plt.pcolormesh(data_zscored[:, :200], vmin=0, vmax=100, cmap='jet')  # vmax=30
+# plt.colorbar()
 
 
 #%% GLM in neural data (frate)
